@@ -120,7 +120,7 @@ def plot_forest_all_proba(y_proba_all, y_gt):
     mat = np.zeros((num_tree, N))
     LOGGER.info('mat.shape={}'.format(mat.shape))
     for i in range(num_tree):
-        mat[i,:] = y_proba_all[i][(range(N), y_gt)]
+        mat[i,:] = y_proba_all[i][(list(range(N)), y_gt)]
     pylab.matshow(mat, fignum=False, cmap='Blues', vmin=0, vmax=1.0)
     pylab.grid(False)
     pylab.show()
@@ -135,10 +135,10 @@ def plot_confusion_matrix(cm, label_list, title='Confusion matrix', cmap=None):
     pylab.clf()
     pylab.matshow(cm, fignum=False, cmap='Blues', vmin=0, vmax=1.0)
     ax = pylab.axes()
-    ax.set_xticks(range(len(label_list)))
+    ax.set_xticks(list(range(len(label_list))))
     ax.set_xticklabels(label_list, rotation='vertical')
     ax.xaxis.set_ticks_position('bottom')
-    ax.set_yticks(range(len(label_list)))
+    ax.set_yticks(list(range(len(label_list))))
     ax.set_yticklabels(label_list)
     pylab.title(title)
     pylab.colorbar()

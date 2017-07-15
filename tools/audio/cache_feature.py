@@ -32,12 +32,12 @@ def save_cache(src_path, des_path, get_feature_func):
         X, sr = librosa.load(src_path)
         src = int(sr)
         feature = get_feature_func(X, sr)
-        print('[INFO] Saving Cache in {} ...'.format(des_path))
+        print(('[INFO] Saving Cache in {} ...'.format(des_path)))
         des_par = osp.abspath(osp.join(des_path, osp.pardir))
         if not osp.exists(des_par):
             os.makedirs(des_par)
-    except Exception, e:
-        print("[ERROR] Unkown error happend when dealing with{}".format(src_path))
+    except Exception as e:
+        print(("[ERROR] Unkown error happend when dealing with{}".format(src_path)))
         #print(e)
         return -1
     np.save(des_path, feature)
@@ -62,9 +62,9 @@ if __name__ == '__main__':
             continue
         src_paths.append(osp.join(dataset.data_base, rel_path))
         des_paths.append(des_path)
-    print('Total={}, Done={}, Undo={}'.format(len(rel_paths), len(rel_paths)-len(src_paths), len(src_paths)))
-    print('src_paths[:5]={}'.format(src_paths[:5]))
-    print('des_paths[:5]={}'.format(des_paths[:5]))
+    print(('Total={}, Done={}, Undo={}'.format(len(rel_paths), len(rel_paths)-len(src_paths), len(src_paths))))
+    print(('src_paths[:5]={}'.format(src_paths[:5])))
+    print(('des_paths[:5]={}'.format(des_paths[:5])))
 
     status = Parallel(n_jobs=-1, verbose=1, backend='multiprocessing')(
             delayed(save_cache)(src_paths[i], des_paths[i], get_feature_func)
@@ -75,8 +75,8 @@ if __name__ == '__main__':
     for i, src_path in enumerate(src_paths):
         if status[i] == -1:
             error_src_paths.append(src_path)
-    print('len(error_src_paths)={}, error_src_paths[:5]={}'.format(
-        len(error_src_paths), error_src_paths[:5]))
+    print(('len(error_src_paths)={}, error_src_paths[:5]={}'.format(
+        len(error_src_paths), error_src_paths[:5])))
     if len(error_src_paths) > 0:
         error_save_path = dataset.data_set_path + '.error'
         with open(error_save_path, 'wb') as f:
